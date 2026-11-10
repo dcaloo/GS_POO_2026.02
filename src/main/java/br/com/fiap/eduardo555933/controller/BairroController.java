@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/bairros")
@@ -49,7 +50,7 @@ public class BairroController {
     }
 
     @PostMapping("/excluir/{id}")
-    public String excluir(@PathVariable Long id, org.springframework.web.servlet.mvc.support.RedirectAttributes redirectAttributes) {
+    public String excluir(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         try {
             bairroService.excluir(id);
             redirectAttributes.addFlashAttribute("sucesso", "Bairro excluido com sucesso");
