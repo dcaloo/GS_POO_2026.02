@@ -1,0 +1,58 @@
+
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Bairros</title>
+</head>
+<body>
+
+<h1>Bairros Cadastrados</h1>
+
+<a th:href="@{/bairros/novo}">Cadastrar Novo Bairro</a>
+
+<p th:if="${sucesso}" th:text="${sucesso}"></p>
+<p th:if="${erro}" th:text="${erro}"></p>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Zona</th>
+        <th>População</th>
+        <th>Ações</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="bairro : ${bairros}">
+        <td th:text="${bairro.id}"></td>
+        <td th:text="${bairro.nome}"></td>
+        <td th:text="${bairro.zona}"></td>
+        <td th:text="${bairro.populacao}"></td>
+        <td>
+            <a th:href="@{/bairros/editar/{id}(id=${bairro.id})}">Editar</a>
+
+            <form th:action="@{/bairros/excluir/{id}(id=${bairro.id})}" method="post">
+                <button type="submit">Excluir</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<p th:if="${#lists.isEmpty(bairros)}">Nenhum bairro cadastrado.</p>
+
+<a th:href="@{/}" style="
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #333;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+">
+    ← Voltar ao Menu Principal
+</a>
+</body>
+</html>

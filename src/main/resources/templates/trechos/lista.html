@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Trechos</title>
+</head>
+<body>
+
+<h1>Trechos Cadastrados</h1>
+
+<a th:href="@{/trechos/novo}">Cadastrar Novo Trecho</a>
+
+<p th:if="${sucesso}" th:text="${sucesso}"></p>
+<p th:if="${erro}" th:text="${erro}"></p>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Logradouro</th>
+        <th>Tipo de Calçada</th>
+        <th>Altitude</th>
+        <th>Bairro</th>
+        <th>Ações</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="trecho : ${trechos}">
+        <td th:text="${trecho.id}"></td>
+        <td th:text="${trecho.logradouro}"></td>
+        <td th:text="${trecho.tipoCalcada}"></td>
+        <td th:text="${trecho.altitude} + ' m'"></td>
+        <td>
+            <span th:each="bairro : ${bairros}"
+                  th:if="${bairro.id == trecho.bairroId}"
+                  th:text="${bairro.nome}"></span>
+        </td>
+        <td>
+            <a th:href="@{/trechos/editar/{id}(id=${trecho.id})}">Editar</a>
+
+            <form th:action="@{/trechos/excluir/{id}(id=${trecho.id})}" method="post">
+                <button type="submit">Excluir</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<p th:if="${#lists.isEmpty(trechos)}">Nenhum trecho cadastrado.</p>
+
+<a th:href="@{/bairros}">Ver Bairros</a>
+
+<a th:href="@{/}" style="
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #333;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+">
+    ← Voltar ao Menu Principal
+</a>
+</body>
+</html>

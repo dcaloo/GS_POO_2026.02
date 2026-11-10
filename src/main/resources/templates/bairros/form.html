@@ -1,0 +1,51 @@
+
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro de Bairro</title>
+</head>
+<body>
+
+<h1 th:text="${bairro.id == null} ? 'Cadastrar Bairro' : 'Editar Bairro'"></h1>
+
+<form th:action="@{/bairros/salvar}" th:object="${bairro}" method="post">
+
+    <input type="hidden" th:field="*{id}">
+
+    <div>
+        <label for="nome">Nome do Bairro:</label>
+        <input type="text" id="nome" th:field="*{nome}" maxlength="80">
+        <span th:if="${#fields.hasErrors('nome')}"
+              th:errors="*{nome}"></span>
+    </div>
+
+    <div>
+        <label for="zona">Zona:</label>
+        <select id="zona" th:field="*{zona}">
+            <option value="">Selecione uma zona</option>
+            <option value="Centro">Centro</option>
+            <option value="Norte">Norte</option>
+            <option value="Sul">Sul</option>
+            <option value="Leste">Leste</option>
+            <option value="Oeste">Oeste</option>
+        </select>
+        <span th:if="${#fields.hasErrors('zona')}"
+              th:errors="*{zona}"></span>
+    </div>
+
+    <div>
+        <label for="populacao">População:</label>
+        <input type="number" id="populacao" th:field="*{populacao}" min="0">
+        <span th:if="${#fields.hasErrors('populacao')}"
+              th:errors="*{populacao}"></span>
+    </div>
+
+    <button type="submit">Salvar</button>
+
+</form>
+
+<a th:href="@{/bairros}">Voltar para a lista</a>
+
+</body>
+</html>

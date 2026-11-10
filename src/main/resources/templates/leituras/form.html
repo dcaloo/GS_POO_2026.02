@@ -1,0 +1,50 @@
+
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro de Leitura</title>
+</head>
+<body>
+
+<h1 th:text="${leitura.id == null} ? 'Cadastrar Leitura' : 'Editar Leitura'"></h1>
+
+<form th:action="@{/leituras/salvar}" th:object="${leitura}" method="post">
+
+    <input type="hidden" th:field="*{id}">
+
+    <div>
+        <label for="dataHora">Data e Hora:</label>
+        <input type="datetime-local" id="dataHora" th:field="*{dataHora}">
+        <span th:if="${#fields.hasErrors('dataHora')}"
+              th:errors="*{dataHora}"></span>
+    </div>
+
+    <div>
+        <label for="lamina">Lâmina de Água (cm):</label>
+        <input type="number" id="lamina" th:field="*{lamina}" min="0" max="300">
+        <span th:if="${#fields.hasErrors('lamina')}"
+              th:errors="*{lamina}"></span>
+    </div>
+
+    <div>
+        <label for="trechoId">Trecho:</label>
+        <select id="trechoId" th:field="*{trechoId}">
+            <option value="">Selecione um trecho</option>
+            <option th:each="trecho : ${trechos}"
+                    th:value="${trecho.id}"
+                    th:text="${trecho.logradouro}">
+            </option>
+        </select>
+        <span th:if="${#fields.hasErrors('trechoId')}"
+              th:errors="*{trechoId}"></span>
+    </div>
+
+    <button type="submit">Salvar</button>
+
+</form>
+
+<a th:href="@{/leituras}">Voltar para a lista</a>
+
+</body>
+</html>

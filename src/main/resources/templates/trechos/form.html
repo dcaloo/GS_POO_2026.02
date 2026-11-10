@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro de Trecho</title>
+</head>
+<body>
+
+<h1 th:text="${trecho.id == null} ? 'Cadastrar Trecho' : 'Editar Trecho'"></h1>
+
+<form th:action="@{/trechos/salvar}" th:object="${trecho}" method="post">
+
+    <input type="hidden" th:field="*{id}">
+
+    <div>
+        <label for="logradouro">Logradouro:</label>
+        <input type="text" id="logradouro" th:field="*{logradouro}" maxlength="120">
+        <span th:if="${#fields.hasErrors('logradouro')}"
+              th:errors="*{logradouro}"></span>
+    </div>
+
+    <div>
+        <label for="tipoCalcada">Tipo de Calçada:</label>
+        <select id="tipoCalcada" th:field="*{tipoCalcada}">
+            <option value="">Selecione o tipo</option>
+            <option value="Regular">Regular</option>
+            <option value="Irregular">Irregular</option>
+            <option value="Escadaria">Escadaria</option>
+            <option value="Sem iluminação">Sem iluminação</option>
+        </select>
+        <span th:if="${#fields.hasErrors('tipoCalcada')}"
+              th:errors="*{tipoCalcada}"></span>
+    </div>
+
+    <div>
+        <label for="altitude">Altitude (metros):</label>
+        <input type="number" id="altitude" th:field="*{altitude}" min="0" max="2000">
+        <span th:if="${#fields.hasErrors('altitude')}"
+              th:errors="*{altitude}"></span>
+    </div>
+
+    <div>
+        <label for="bairroId">Bairro:</label>
+        <select id="bairroId" th:field="*{bairroId}">
+            <option value="">Selecione um bairro</option>
+            <option th:each="bairro : ${bairros}"
+                    th:value="${bairro.id}"
+                    th:text="${bairro.nome}">
+            </option>
+        </select>
+        <span th:if="${#fields.hasErrors('bairroId')}"
+              th:errors="*{bairroId}"></span>
+    </div>
+
+    <button type="submit">Salvar</button>
+
+</form>
+
+<a th:href="@{/trechos}">Voltar para a lista</a>
+
+</body>
+</html>

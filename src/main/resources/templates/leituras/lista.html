@@ -1,0 +1,71 @@
+
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Leituras</title>
+</head>
+<body>
+
+<h1>Leituras de Nível de Água</h1>
+
+<a th:href="@{/leituras/novo}">Cadastrar Nova Leitura</a>
+
+<p th:if="${sucesso}" th:text="${sucesso}"></p>
+<p th:if="${erro}" th:text="${erro}"></p>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Data e Hora</th>
+        <th>Lâmina de Água</th>
+        <th>Situação</th>
+        <th>Trecho</th>
+        <th>Ações</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="leitura : ${leituras}">
+        <td th:text="${leitura.id}"></td>
+
+        <td th:text="${#temporals.format(leitura.dataHora, 'dd/MM/yyyy HH:mm')}"></td>
+
+        <td th:text="${leitura.lamina} + ' cm'"></td>
+
+        <td th:text="${leitura.situacao}"></td>
+
+        <td>
+            <span th:each="trecho : ${trechos}"
+                  th:if="${trecho.id == leitura.trechoId}"
+                  th:text="${trecho.logradouro}"></span>
+        </td>
+
+        <td>
+            <a th:href="@{/leituras/editar/{id}(id=${leitura.id})}">Editar</a>
+
+            <form th:action="@{/leituras/excluir/{id}(id=${leitura.id})}" method="post">
+                <button type="submit">Excluir</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<p th:if="${#lists.isEmpty(leituras)}">Nenhuma leitura cadastrada.</p>
+
+<a th:href="@{/trechos}">Ver Trechos</a>
+
+<a th:href="@{/}" style="
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #333;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+">
+    ← Voltar ao Menu Principal
+</a>
+</body>
+</html>
