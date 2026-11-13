@@ -5,9 +5,8 @@
 
 ## Parâmetros
 
-- **P1:** GS933 — prefixo das tabelas Oracle.
-- **P2:** 12 cm — limiar de alerta.
-
+- **P1:** GS933
+- **P2:** 12 cm
 ## Versão escolhida
 
 Com HTML
